@@ -1902,10 +1902,22 @@ class EcFlexpart(object):
                                    'FILES FAILED!')
 
             if c.ectrans and _config.FLAG_ON_ECMWFSERVER:
-                execute_subprocess(['ectrans', '-overwrite', '-gateway',
-                                    c.gateway, '-remote', c.destination,
-                                    '-source', ofile],
-                                   error_msg='TRANSFER TO LOCAL SERVER FAILED!')
+                proc = execute_subprocess(['ectrans', '-overwrite', '-gateway',
+                                           c.gateway, '-remote', c.destination,
+                                           '-source', ofile],
+                                          error_msg='TRANSFER TO LOCAL SERVER FAILED!')
+                # apl: start
+                # if the ectrans routine returns 1 => file should have
+                # been copied in tmp folder, where it will be deleted
+                # after a successful transfer
+                try:
+                    import time
+                    time.sleep(10)
+                    if(proc==1):
+                        execute_subprocess(['rm', ofile])
+                except TypeError:
+                    break
+                # apl: end
 
             if c.ecstorage and _config.FLAG_ON_ECMWFSERVER:
                 execute_subprocess(['ecp', '-o', ofile,
