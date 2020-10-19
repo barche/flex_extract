@@ -727,30 +727,14 @@ def submit_job_to_ecserver(target, jobname):
     noWAIT = 99
     waittime = 10
 
-    while noEXEC>10:
-        # run "ecaccess-job-list | grep EXEC" and split the resulting
-        # string at the whitespaces and then count the number of
-        # occurences of EXEC => # of active jobs
-        ps = subprocess.Popen(('ecaccess-job-list'), stdout=subprocess.PIPE)
-        try:
-            output = str(subprocess.check_output(('grep', 'EXEC'), stdin=ps.stdout)).split()
-        except subprocess.CalledProcessError:
-            break
-        noEXEC = output.count('EXEC')
-        print('number of active jobs: ', str(noEXEC))
-        import time
-        print('waiting until less processes are active (checking every '+str(waittime)+'s)')
-        time.sleep(waittime)
-
-    # do the same for waiting jobs
-    while noWAIT>5:
-        ps = subprocess.Popen(('ecaccess-job-list'), stdout=subprocess.PIPE)
-        try:
-            output = str(subprocess.check_output(('grep', 'WAIT'), stdin=ps.stdout)).split()
-        except subprocess.CalledProcessError:
-            break
-        noWAIT = output.count('WAIT')
-        print('number of waiting jobs: ', str(noWAIT))
+    while (noEXEC+noWAIT)>12:
+        # do "ecaccess-job-list" and check the numbers of EXEC and
+        # WAIT => # of active jobs
+        ps = subprocess.check_output(('ecaccess-job-list'))
+        noEXEC = str(ps).count('EXEC')
+        noWAIT = str(ps).count('WAIT')
+        print('number of EXEC jobs: ', str(noEXEC))
+        print('number of WAIT jobs: ', str(noWAIT))
         import time
         print('waiting until less processes are active (checking every '+str(waittime)+'s)')
         time.sleep(waittime)
