@@ -331,7 +331,7 @@ to start the installation. You should see the following standard output.
 Local system installation
 =========================
 
-There is also the possibility to seperate the software executables from the user application files. For doing so, the ``TARGET`` parameter can be set to "syslocal" and the additional parameter ``SYSINSTALLDIR`` in the ``setup_local.sh`` has to be specified. This new path will contain the Fortran and Python executables of ``flex_extract``. If you chose to set a system path for this, please start the script as root. 
+There is also the possibility to separate the software executables from the user application files. For doing so, the ``TARGET`` parameter can be set to "syslocal" and the additional parameter ``SYSINSTALLDIR`` in the ``setup_local.sh`` has to be specified. This new path will contain the Fortran and Python executables of ``flex_extract``. If you chose to set a system path for this, please start the script as root. 
 The user directory for ``flex_extract``, which basically consists of everything except the ``Source`` directory, will be installed into ``INSTALLDIR``. 
 In this installation mode, an extra (hidden) ``.setup.rc`` file will be generated in the ``Run`` directory. It contains the necessary settings for running the local system mode.
 
@@ -388,4 +388,4 @@ to start the installation. You should see the following standard output.
 	SUCCESS: INSTALLATION FINISHED!
 
 
-You can now change into the user directory specified in ``INSTALLDIR`` and find a flex_extract_vX.X directory there. 
+You can now change into the user directory specified in ``INSTALLDIR`` and find a ``flex_extract_vX.X`` directory there. 

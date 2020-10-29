@@ -449,7 +449,7 @@ lrwxrwxrwx. <span class="m">1</span> &lt;username&gt; tmc <span class="m">20</sp
 </div>
 <div class="section" id="local-system-installation">
 <h2>Local system installation<a class="headerlink" href="#local-system-installation" title="Permalink to this headline">¶</a></h2>
-<p>There is also the possibility to seperate the software executables from the user application files. For doing so, the <code class="docutils literal notranslate"><span class="pre">TARGET</span></code> parameter can be set to “syslocal” and the additional parameter <code class="docutils literal notranslate"><span class="pre">SYSINSTALLDIR</span></code> in the <code class="docutils literal notranslate"><span class="pre">setup_local.sh</span></code> has to be specified. This new path will contain the Fortran and Python executables of <code class="docutils literal notranslate"><span class="pre">flex_extract</span></code>. If you chose to set a system path for this, please start the script as root.
+<p>There is also the possibility to separate the software executables from the user application files. For doing so, the <code class="docutils literal notranslate"><span class="pre">TARGET</span></code> parameter can be set to “syslocal” and the additional parameter <code class="docutils literal notranslate"><span class="pre">SYSINSTALLDIR</span></code> in the <code class="docutils literal notranslate"><span class="pre">setup_local.sh</span></code> has to be specified. This new path will contain the Fortran and Python executables of <code class="docutils literal notranslate"><span class="pre">flex_extract</span></code>. If you chose to set a system path for this, please start the script as root.
 The user directory for <code class="docutils literal notranslate"><span class="pre">flex_extract</span></code>, which basically consists of everything except the <code class="docutils literal notranslate"><span class="pre">Source</span></code> directory, will be installed into <code class="docutils literal notranslate"><span class="pre">INSTALLDIR</span></code>.
 In this installation mode, an extra (hidden) <code class="docutils literal notranslate"><span class="pre">.setup.rc</span></code> file will be generated in the <code class="docutils literal notranslate"><span class="pre">Run</span></code> directory. It contains the necessary settings for running the local system mode.</p>
 <p>Despite the change in the <code class="docutils literal notranslate"><span class="pre">TARGET</span></code> parameter, the meaning of <code class="docutils literal notranslate"><span class="pre">INSTALLDIR</span></code> and the additional <code class="docutils literal notranslate"><span class="pre">SYSINSTALLDIR</span></code>, the steps for installation are the same as in the local installation mentioned above. For example, modify the <code class="docutils literal notranslate"><span class="pre">setup_local.sh</span></code> file as follows:</p>
@@ -497,7 +497,7 @@ lrwxrwxrwx. <span class="m">1</span> &lt;username&gt; tmc <span class="m">20</sp
 SUCCESS: INSTALLATION FINISHED!
 </pre></div>
 </div>
-<p>You can now change into the user directory specified in <code class="docutils literal notranslate"><span class="pre">INSTALLDIR</span></code> and find a flex_extract_vX.X directory there.</p>
+<p>You can now change into the user directory specified in <code class="docutils literal notranslate"><span class="pre">INSTALLDIR</span></code> and find a <code class="docutils literal notranslate"><span class="pre">flex_extract_vX.X</span></code> directory there.</p>
 </div>
 </div>
 
