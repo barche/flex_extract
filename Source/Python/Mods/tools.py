@@ -22,6 +22,10 @@
 #          put_file_to_ecserver, submit_job_to_ecserver, get_informations,
 #          get_dimensions, execute_subprocess, none_or_int, none_or_str
 #
+#    August 2020 - Leopold Haimberger (University of Vienna)
+#        - added function to check if a specific string is in a file
+#        - added function to overwrite lines in a file which contain specific string
+#
 # @License:
 #    (C) Copyright 2014-2020.
 #    Anne Philipp, Leopold Haimberger

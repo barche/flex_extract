@@ -30,14 +30,14 @@
 #
 # THE USER HAS TO SPECIFY THESE PARAMETERS
 #
-TARGET='syslocal'
-MAKEFILE='makefile_fast_anne'
+TARGET='local'
+MAKEFILE='makefile_local_gfortran'
 ECUID='<username>'
 ECGID='<groupID>'
 GATEWAY='<gatewayname>'
 DESTINATION='<name>@genericSftp'
-INSTALLDIR=$HOME
-SYSINSTALLDIR=../sys
+INSTALLDIR=None
+SYSINSTALLDIR=None
 JOB_TEMPLATE=''
 CONTROLFILE='CONTROL_CERA'
 # -----------------------------------------------------------------
@@ -98,7 +98,6 @@ fi
 # CALL INSTALLATION SCRIPT WITH DETERMINED COMMANDLINE ARGUMENTS
 
 $script $parameterlist
-source ~/.bashrc
 
 
 

@@ -8,6 +8,11 @@
 # @Change History:
 #      June 2020 - Anne Philipp
 #         - changed template filenames to .template
+#      August 2020 - Leopold Haimberger
+#         - added another target for installation
+#         - added filename which will contain paths for system version     
+#         - checks if software runs in normal local mode or system local mode
+#           and defines paths to user directory and executable paths    
 #
 # @License:
 #    (C) Copyright 2014-2020.

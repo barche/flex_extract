@@ -21,6 +21,11 @@
 #        - reconfigured mk_tarball to select *.template files instead
 #          of *.nl and *.temp
 #        - added check for makefile settings
+#    August 2020 - Leopold Haimberger
+#        - added a new installation section for system installation (if-else block)
+#        - read new argument from command line
+#        - write .setup.rc for a system installation into Run directory
+#        - copy executables to system path and user files to user path
 #
 # @License:
 #    (C) Copyright 2014-2020.
