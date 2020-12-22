@@ -725,20 +725,40 @@ def submit_job_to_ecserver(target, jobname):
     # apl: start
     noEXEC = 99
     noWAIT = 99
-    waittime = 10
+    noECTRANS = 2000
+    waittime = 60
+    import datetime as dt
 
-    while (noEXEC+noWAIT)>12:
+    while (noEXEC+noWAIT)>20:
         # do "ecaccess-job-list" and check the numbers of EXEC and
         # WAIT => # of active jobs
-        ps = subprocess.check_output(('ecaccess-job-list'))
+        try:
+            ps = subprocess.check_output(('ecaccess-job-list'))
+        except:
+            print('problem with ecaccess-job-list; waiting five minutes')
+            time.sleep(300)
+            continue
         noEXEC = str(ps).count('EXEC')
         noWAIT = str(ps).count('WAIT')
+        print(dt.datetime.now())
         print('number of EXEC jobs: ', str(noEXEC))
         print('number of WAIT jobs: ', str(noWAIT))
         import time
-        print('waiting until less processes are active (checking every '+str(waittime)+'s)')
-        time.sleep(waittime)
-    # apl: end 
+        # only wait if there are already a few active jobs (e.g., also
+        # waits to set new ./setup.sh jobs
+        if (noEXEC+noWAIT)>10:
+            print('waiting until less processes are active (checking every '+str(waittime)+'s)')
+            time.sleep(waittime)
+    
+    # add check for number of jobs in ectrans queue
+    while (noECTRANS)>1600:
+        ectrans_out = subprocess.check_output(('ecaccess-ectrans-list'))
+        noECTRANS = len(str(ectrans_out).split('\\n'))
+        if (noECTRANS)>1500:
+            print('waiting until less processes in ectrans queue (limit 1600); checking every '+str(waittime)+'s)')
+            time.sleep(waittime)
+            # ecaccess-ectrans-list | wc -l
+    # apl: end
 
     try:
         job_id = subprocess.check_output(['ecaccess-job-submit', '-queueName',
