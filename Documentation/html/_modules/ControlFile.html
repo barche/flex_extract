@@ -182,6 +182,8 @@
 <span class="c1">#        - outsourced the commandline argument assignments to control attributes</span>
 <span class="c1">#   June 2020 - Anne Philipp</span>
 <span class="c1">#        - update default makefile to None</span>
+<span class="c1">#   August 2020 - Leopold Haimberger</span>
+<span class="c1">#        - added a class parameter for system installation path</span>
 <span class="c1">#</span>
 <span class="c1"># @License:</span>
 <span class="c1">#    (C) Copyright 2014-2020.</span>
@@ -565,6 +567,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">flexextractdir</span> <span class="o">=</span> <span class="n">_config</span><span class="o">.</span><span class="n">PATH_FLEXEXTRACT_DIR</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exedir</span> <span class="o">=</span> <span class="n">_config</span><span class="o">.</span><span class="n">PATH_FORTRAN_SRC</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">installdir</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sysinstalldir</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">makefile</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gateway</span> <span class="o">=</span> <span class="kc">None</span>

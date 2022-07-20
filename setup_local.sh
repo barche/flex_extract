@@ -10,6 +10,11 @@
 #    python installation script. It also does some checks to 
 #    guarantee necessary parameters were set.
 #
+# @History:
+#    Leopold Haimberger; Aug 2020
+#       added new parameter for a system installation 
+#       (seperate executable and user directories)
+#
 # @Licence:
 #    (C) Copyright 2014-2020.
 #
@@ -32,6 +37,7 @@ ECGID='<groupID>'
 GATEWAY='<gatewayname>'
 DESTINATION='<name>@genericSftp'
 INSTALLDIR=None
+SYSINSTALLDIR=None
 JOB_TEMPLATE=''
 CONTROLFILE='CONTROL_CERA'
 # -----------------------------------------------------------------
@@ -75,8 +81,11 @@ fi
 if [ -n "$MAKEFILE" ]; then
   parameterlist+=" --makefile=$MAKEFILE"
 fi
-if [ -n "$FLEXPARTDIR" ]; then # not empty
-  parameterlist+=" --flexpartdir=$FLEXPARTDIR"
+if [ -n "$INSTALLDIR" ]; then 
+  parameterlist+=" --installdir=$INSTALLDIR"
+fi
+if [ -n "$SYSINSTALLDIR" ]; then 
+  parameterlist+=" --sysinstalldir=$SYSINSTALLDIR"
 fi
 if [ -n "$JOB_TEMPLATE" ]; then
   parameterlist+=" --job_template=$JOB_TEMPLATE"
@@ -89,4 +98,6 @@ fi
 # CALL INSTALLATION SCRIPT WITH DETERMINED COMMANDLINE ARGUMENTS
 
 $script $parameterlist
+
+
 

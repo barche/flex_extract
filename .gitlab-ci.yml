@@ -1,0 +1,11 @@
+image: python:3.7-alpine
+
+pages:
+  stage: deploy
+  script:
+  - cp -r Documentation/html public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master

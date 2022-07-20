@@ -20,6 +20,8 @@
 #        - outsourced the commandline argument assignments to control attributes
 #   June 2020 - Anne Philipp
 #        - update default makefile to None
+#   August 2020 - Leopold Haimberger
+#        - added a class parameter for system installation path
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -403,6 +405,7 @@ class ControlFile(object):
         self.flexextractdir = _config.PATH_FLEXEXTRACT_DIR
         self.exedir = _config.PATH_FORTRAN_SRC
         self.installdir = None
+        self.sysinstalldir = None
         self.makefile = None
         self.destination = None
         self.gateway = None
