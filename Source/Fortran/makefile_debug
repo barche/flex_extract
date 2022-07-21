@@ -15,8 +15,7 @@
 EXE      =  calc_etadot_debug.out
 
 ECCODES_LIB=  -Bstatic -leccodes_f90 -leccodes -Bdynamic -lm 
-EMOSLIB=-lemosR64
-LIB =  $(ECCODES_LIB) $(EMOSLIB)
+LIB =  $(ECCODES_LIB) 
 
 ECCODES_INCLUDE_DIR=/usr/lib/x86_64-linux-gnu/fortran/gfortran-mod-15
 INC = -I. -I$(ECCODES_INCLUDE_DIR)

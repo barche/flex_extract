@@ -14,7 +14,7 @@
 
 EXE      =  calc_etadot
 
-LIB     =  $(ECCODES_LIB) $(EMOSLIB)   
+LIB     =  $(ECCODES_LIB)   
 INC = -I. -I$(ECCODES_INCLUDE_DIR)
 
 FC = ftn

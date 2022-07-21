@@ -14,7 +14,7 @@
 
 EXE      =  calc_etadot_fast.out
 
-LIB     =  $(ECCODES_LIB) $(EMOSLIB)   
+LIB     =  $(ECCODES_LIB)    
 INC = -I. -I$(ECCODES_INCLUDE_DIR)
 
 FC=gfortran  

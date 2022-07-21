@@ -22,4 +22,13 @@ rwGRIB2.f90 subroutine readlatlon: check alloc status deallocate values
      calc_etadot.out -> calc_etadot_fast.out
      makefile_local_gfortran -> makefile_fast
    
-   
+2022-07-21 AT
+   solved issue with emoslib!
+   see ticket #312 on flexpart.eu
+
+   identified the source files from emoslib which calc_etadot needs
+   converted them from f77 to f90 code
+   adapted makefile to get rid of emoslib and make use of the fft source files
+
+   new files: set99.f90, fft99.f90, qpassm.f90, rpassm.f90, jsppole.f90
+      
