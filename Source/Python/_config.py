@@ -10,9 +10,9 @@
 #         - changed template filenames to .template
 #      August 2020 - Leopold Haimberger
 #         - added another target for installation
-#         - added filename which will contain paths for system version     
+#         - added filename which will contain paths for system version
 #         - checks if software runs in normal local mode or system local mode
-#           and defines paths to user directory and executable paths    
+#           and defines paths to user directory and executable paths
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -42,11 +42,34 @@ import platform
 # PARAMETERS
 # ------------------------------------------------------------------------------
 
-_VERSION_STR = '7.1.2_ctbto'
+_VERSION_STR = '7.1.3'
 
-FLAG_ON_ECMWFSERVER = 'ecgb' in platform.node()
+HOSTNAMES_BOLOGNA_LIST = ['ecs', 'aa', 'ab', 'ac', 'ad']
+HOSTNAMES_READING_LIST = ['ecgb', 'cca', 'ccb']
 
-QUEUES_LIST = ['ecgate', 'cca', 'ccb']
+# name of environment variable on ECMWF Bologna servers
+# that indicates which cluster / host we are on
+HOSTENV_BOLOGNA = 'EC_CLUSTER'
+# name of environment variable on ECMWF Reading servers
+# that indicates which cluster / host we are on
+HOSTENV_READING = 'ECPLATFORM'
+
+# test if we are on a Bologna or Reading server
+
+# Test and set ECMWF Bologna server values
+if os.getenv(HOSTENV_BOLOGNA) is not None:
+    ec_hostname = os.getenv(HOSTENV_BOLOGNA)
+    FLAG_ON_ECMWFSERVER = ec_hostname in HOSTNAMES_BOLOGNA_LIST
+    QUEUES_LIST = ['ecs', 'ecs-login', 'hpc', 'hpc-login', 'hpc-2020']
+# Test and set ECMWF Reading server values
+elif os.getenv(HOSTENV_READING) is not None:
+    ec_hostname = os.getenv(HOSTENV_READING)
+    FLAG_ON_ECMWFSERVER = ec_hostname in HOSTNAMES_READING_LIST
+    QUEUES_LIST = ['ecgate', 'cca', 'ccb']
+else:
+    FLAG_ON_ECMWFSERVER = False
+
+QUEUES_LIST_ALL = ['ecs', 'ecs-login', 'hpc', 'hpc-login', 'hpc-2020', 'ecgate', 'cca', 'ccb']
 
 INSTALL_TARGETS = ['local', 'syslocal', 'ecgate', 'cca', 'ccb']
 

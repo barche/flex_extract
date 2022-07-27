@@ -119,8 +119,8 @@ def check_area(grid, area, upper, lower, left, right):
     '''Defines the correct area string.
 
     Checks the format of the four area components wether it is on
-    the order of 1000 or 1. 
-    Also checks wether area was already set on command line, 
+    the order of 1000 or 1.
+    Also checks wether area was already set on command line,
     then the four components are overwritten.
     Convert to correct format of the order of magnitude "1" and sets the
     area parameter (North/West/South/East).
@@ -452,7 +452,7 @@ def check_mail(mail):
 
 def check_queue(queue, gateway, destination, ecuid, ecgid):
     '''Check if the necessary ECMWF parameters are set if the queue is
-    one of the QUEUES_LIST (in _config).
+    one of the QUEUES_LIST_ALL (in _config).
 
     Parameters
     ----------
@@ -478,14 +478,14 @@ def check_queue(queue, gateway, destination, ecuid, ecgid):
     ------
 
     '''
-    if queue in _config.QUEUES_LIST and \
+    if queue in _config.QUEUES_LIST_ALL and \
             (not ecuid or not ecgid):
         raise ValueError('\nEnvironment variables ECUID '
                          'and ECGID were not set properly! \n '
                          'Please check for existence of file "ECMWF_ENV" '
                          'in the run directory!')
-    elif queue in _config.QUEUES_LIST and \
-             (not gateway or not destination):
+    elif queue in _config.QUEUES_LIST_ALL and \
+            (not gateway or not destination):
         print('WARNING: Parameters GATEWAY and DESTINATION were '
               'not properly set for working on ECMWF server. \n'
               'There will be no transfer of output files to the '
