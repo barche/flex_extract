@@ -240,13 +240,10 @@ def install_local(c):
     tar_file = os.path.join(_config.PATH_FLEXEXTRACT_DIR,
                             _config.FLEXEXTRACT_DIRNAME + '.tar')
 
-    c.installdir = os.path.abspath(os.path.expandvars(os.path.expanduser(
-                c.installdir)))
-    c.sysinstalldir = os.path.abspath(os.path.expandvars(os.path.expanduser(
-        c.sysinstalldir)))
-
     # this is standard installation into a single directory
     if c.install_target == 'local':
+        c.installdir = os.path.abspath(os.path.expandvars(os.path.expanduser(
+            c.installdir)))
 
         # installation into the current directory
         if os.path.abspath(_config.PATH_FLEXEXTRACT_DIR) == c.installdir:
@@ -281,6 +278,8 @@ def install_local(c):
 
     # this is system installation were executables and user files are separated
     elif c.install_target == 'syslocal':
+        c.sysinstalldir = os.path.abspath(os.path.expandvars(os.path.expanduser(
+            c.sysinstalldir)))
         if os.path.abspath(_config.PATH_FLEXEXTRACT_DIR) == c.sysinstalldir :
             sys.exit('ERROR: System installation path is equal to user '
                      'installation path.\n Please change either the system '
