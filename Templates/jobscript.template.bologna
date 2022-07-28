@@ -1,0 +1,76 @@
+#!/bin/ksh
+
+# ON ECS or HPC:
+# start with ecaccess-job-submit -queueName <QUEUE_NAME> <NAME_OF_THIS_FILE>  on gateway server
+# start with srun <NAME_OF_THIS_FILE> directly on machine
+
+#SBATCH --chdir=$$$$SCRATCH
+#SBATCH --qos=el
+#SBATCH --job-name=flex_extract
+#SBATCH --output=flex_extract.%j.out
+#SBATCH --error=flex_error.%j.out
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=$username
+#SBATCH --time=24:00:00
+
+## CRAY specific batch requests
+##PBS -N flex_extract
+##PBS -q np
+##PBS -S /usr/bin/ksh
+## -o $$$${SCRATCH}/flex_ecmwf.$$$${PBS_JOBID}.out
+## job output is in .ecaccess_DO_NOT_REMOVE
+##PBS -j oe
+##PBS -V
+##PBS -l EC_threads_per_task=24
+##PBS -l EC_memory_per_task=32000MB
+
+set -x
+export VERSION=$version_number
+case $$$${EC_CLUSTER} in
+  *ecs*)
+  module load python3
+  module load ecmwf-toolbox
+  module load ecaccess
+  export PATH=$$$${PATH}:$fp_root_path
+  ;;
+  *hpc*)
+#  module switch PrgEnv-cray PrgEnv-intel
+  module load python3
+  module load ecmwf-toolbox
+  module load ecaccess
+  export SCRATCH=$$$${TMPDIR}
+  export PATH=$$$${PATH}:$fp_root_path
+  ;;
+esac
+
+cd $$$${SCRATCH}
+mkdir -p extract$$$$$$$$
+cd extract$$$$$$$$
+
+export CONTROL=CONTROL
+
+cat >$$$${CONTROL}<<EOF
+$$control_content
+EOF
+
+
+submit.py --controlfile=$$$${CONTROL} --inputdir=./work --outputdir=./work 1> prot 2>&1
+
+if [ $? -eq 0 ] ; then
+  l=0
+  for muser in `grep -i MAILOPS $$$${CONTROL}`; do
+      if [ $$$${l} -gt 0 ] ; then 
+         mail -s flex.$$$${HOST}.$$$$$$$$ $$$${muser} <prot
+      fi
+      l=$(($$$${l}+1))
+  done
+else
+  l=0
+  for muser in `grep -i MAILFAIL $$$${CONTROL}`; do
+      if [ $$$${l} -gt 0 ] ; then 
+         mail -s "ERROR! flex.$$$${HOST}.$$$$$$$$" $$$${muser} <prot
+      fi
+      l=$(($$$${l}+1))
+  done
+fi
+
