@@ -26,6 +26,10 @@
 #        - added function to check if a specific string is in a file
 #        - added function to overwrite lines in a file which contain specific string
 #
+#    July 2022 - Anne Tipka (formerly Philipp)
+#        - modified function put_file_to_ecserver to put the file automatically
+#          to $HOME directory, to avoid static path creation
+#
 # @License:
 #    (C) Copyright 2014-2020.
 #    Anne Philipp, Leopold Haimberger

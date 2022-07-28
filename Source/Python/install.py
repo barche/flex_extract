@@ -26,6 +26,11 @@
 #        - read new argument from command line
 #        - write .setup.rc for a system installation into Run directory
 #        - copy executables to system path and user files to user path
+#    July 2022 - Anne Tipka (formerly Philipp)
+#        - BugFix: sysinstalldir must be defined in related else path
+#        - template files are now using $HOME and $SCRATCH and hence don't
+#          need ecmwf user group id. Eliminated from function mk_compile_job
+#          and mk_job_template
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -680,7 +685,7 @@ def mk_compilejob(makefile, ecuid, fp_root):
 
     return
 
-def mk_job_template(ecuid, ecgid, fp_root):
+def mk_job_template(ecuid, fp_root):
     '''Modifies the original job template file so that it is specified
     for the user and the environment were it will be applied. Result
     is stored in a new file.
@@ -689,9 +694,6 @@ def mk_job_template(ecuid, ecgid, fp_root):
     ----------
     ecuid : str
         The user id on ECMWF server.
-
-    ecgid : str
-        The group id on ECMWF server.
 
     fp_root : str
        Path to the root directory of FLEXPART environment or flex_extract
@@ -719,7 +721,6 @@ def mk_job_template(ecuid, ecgid, fp_root):
                                        cls=NewTextTemplate)
 
         stream = compile_template.generate(
-            usergroup=ecgid,
             username=ecuid,
             version_number=_config._VERSION_STR,
             fp_root_path=fp_root_path_to_python,

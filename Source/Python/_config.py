@@ -13,6 +13,9 @@
 #         - added filename which will contain paths for system version
 #         - checks if software runs in normal local mode or system local mode
 #           and defines paths to user directory and executable paths
+#      July 2022 - Anne Tipka (formerly Philipp)
+#         - modified to account for changes on Bologna servers,
+#           e.g. queue names and hostnames
 #
 # @License:
 #    (C) Copyright 2014-2020.
