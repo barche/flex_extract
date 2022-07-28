@@ -4,19 +4,20 @@
 # start with ecaccess-job-submit -queueName ecgb NAME_OF_THIS_FILE  on gateway server
 # start with sbatch NAME_OF_THIS_FILE directly on machine
 
-#SBATCH --workdir=/scratch/ms/$usergroup/$username
+#SBATCH --workdir=$${SCRATCH}
 #SBATCH --qos=normal
 #SBATCH --job-name=flex_ecmwf
 #SBATCH --output=flex_ecmwf.%j.out
 #SBATCH --error=flex_ecmwf.%j.out
 #SBATCH --mail-type=FAIL
+#SBATCH --mail-user=$username
 #SBATCH --time=12:00:00
 
 ## CRAY specific batch requests
 ##PBS -N flex_ecmwf
 ##PBS -q ns
 ##PBS -S /usr/bin/ksh
-##PBS -o /scratch/ms/$usergroup/$username/flex_ecmwf.$${Jobname}.$${Job_ID}.out
+##PBS -o $${SCRATCH}/flex_ecmwf.$${Jobname}.$${Job_ID}.out
 # job output is in .ecaccess_DO_NOT_REMOVE
 ##PBS -j oe
 ##PBS -V

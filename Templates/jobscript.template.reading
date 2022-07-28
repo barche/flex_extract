@@ -4,7 +4,7 @@
 # start with ecaccess-job-submit -queueName ecgb NAME_OF_THIS_FILE  on gateway server
 # start with sbatch NAME_OF_THIS_FILE directly on machine
 
-#SBATCH --workdir=/scratch/ms/$usergroup/$username
+#SBATCH --workdir=$$$$SCRATCH
 #SBATCH --qos=normal
 #SBATCH --job-name=flex_ecmwf
 #SBATCH --output=flex_ecmwf.%j.out
@@ -16,7 +16,7 @@
 ##PBS -N flex_ecmwf
 ##PBS -q np
 ##PBS -S /usr/bin/ksh
-## -o /scratch/ms/$usergroup/$username/flex_ecmwf.$$$${PBS_JOBID}.out
+## -o $$$${SCRATCH}/flex_ecmwf.$$$${PBS_JOBID}.out
 ## job output is in .ecaccess_DO_NOT_REMOVE
 ##PBS -j oe
 ##PBS -V
