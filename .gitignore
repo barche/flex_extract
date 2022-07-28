@@ -29,6 +29,7 @@ Source/Fortran/calc_etadot*
 Run/ECMWF_ENV
 Run/Workspace/*
 Run/Jobscripts/*sh
+Templates/submitscript.template
 Testing/Installation/Calc_etadot/fort.15
 For_developers/Sphinx/Build_temp
 
