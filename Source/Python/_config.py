@@ -60,7 +60,7 @@ HOSTENV_READING = 'ECPLATFORM'
 if os.getenv(HOSTENV_BOLOGNA) is not None:
     ec_hostname = os.getenv(HOSTENV_BOLOGNA)
     FLAG_ON_ECMWFSERVER = ec_hostname in HOSTNAMES_BOLOGNA_LIST
-    QUEUES_LIST = ['ecs', 'ecs-login', 'hpc', 'hpc-login', 'hpc-2020']
+    QUEUES_LIST = ['ecs', 'hpc']
 # Test and set ECMWF Reading server values
 elif os.getenv(HOSTENV_READING) is not None:
     ec_hostname = os.getenv(HOSTENV_READING)
@@ -69,9 +69,9 @@ elif os.getenv(HOSTENV_READING) is not None:
 else:
     FLAG_ON_ECMWFSERVER = False
 
-QUEUES_LIST_ALL = ['ecs', 'ecs-login', 'hpc', 'hpc-login', 'hpc-2020', 'ecgate', 'cca', 'ccb']
+QUEUES_LIST_ALL = ['ecs', 'hpc', 'ecgate', 'cca', 'ccb']
 
-INSTALL_TARGETS = ['local', 'syslocal', 'ecgate', 'cca', 'ccb']
+INSTALL_TARGETS = ['local', 'syslocal', 'ecgate', 'cca', 'ccb', 'ecs', 'hpc']
 
 CDS_DATASET_ML = 'reanalysis-era5-complete'
 CDS_DATASET_SFC = 'reanalysis-era5-single-levels'
@@ -87,9 +87,9 @@ FILE_MARS_REQUESTS = 'mars_requests.csv'
 FORTRAN_EXECUTABLE = 'calc_etadot'
 TEMPFILE_USER_ENVVARS = 'ECMWF_ENV.template'
 FILE_USER_ENVVARS = 'ECMWF_ENV'
-TEMPFILE_INSTALL_COMPILEJOB = 'installscript.template'
+TEMPFILE_INSTALL_COMPILEJOB = 'installscript.template.bologna'
 FILE_INSTALL_COMPILEJOB = 'compilejob.ksh'
-TEMPFILE_INSTALL_JOB = 'jobscript.template'
+TEMPFILE_INSTALL_JOB = 'jobscript.template.bologna'
 TEMPFILE_JOB = 'submitscript.template'
 FILE_JOB_OD = 'job.ksh'
 FILE_JOB_OP = 'jopoper.ksh'

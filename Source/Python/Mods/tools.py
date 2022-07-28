@@ -650,7 +650,7 @@ def make_dir(directory):
 
     return
 
-def put_file_to_ecserver(ecd, filename, target, ecuid, ecgid):
+def put_file_to_ecserver(ecd, filename):
     '''Uses the ecaccess-file-put command to send a file to the ECMWF servers.
 
     Note
@@ -667,15 +667,6 @@ def put_file_to_ecserver(ecd, filename, target, ecuid, ecgid):
     filename : str
         The name of the file to send to the ECMWF server.
 
-    target : str
-        The target queue where the file should be sent to.
-
-    ecuid : str
-        The user id on ECMWF server.
-
-    ecgid : str
-        The group id on ECMWF server.
-
     Return
     ------
 
@@ -683,10 +674,7 @@ def put_file_to_ecserver(ecd, filename, target, ecuid, ecgid):
 
     try:
         subprocess.check_output(['ecaccess-file-put',
-                                 ecd + '/' + filename,
-                                 target + ':/home/ms/' +
-                                 ecgid + '/' + ecuid +
-                                 '/' + filename],
+                                 ecd + '/' + filename],
                                 stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         print('... ERROR CODE: ' + str(e.returncode))

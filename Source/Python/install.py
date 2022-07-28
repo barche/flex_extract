@@ -109,7 +109,7 @@ def main():
     c.assign_args_to_control(args)
     check_install_conditions(c)
 
-    if c.install_target.lower() not in ['local', 'syslocal']: # ecgate or cca
+    if c.install_target.lower() not in ['local', 'syslocal']:  # ecmwf servers e.g. ecgate (ecs) and hpc
         install_via_gateway(c)
     else: # local
         install_local(c)
@@ -136,8 +136,8 @@ def get_install_cmdline_args():
 
     parser.add_argument('--target', dest='install_target',
                         type=none_or_str, default=None,
-                        help="Valid targets: syslocal | local | ecgate | cca , \
-                        the latter two are at ECMWF")
+                        help="Valid targets: syslocal | local | ecgate | cca | \
+                        ccb | ecs | hpc , the latter 5 are at ECMWF servers")
     parser.add_argument("--makefile", dest="makefile",
                         type=none_or_str, default=None,
                         help='Name of makefile for compiling the '
@@ -198,7 +198,7 @@ def install_via_gateway(c):
     tarball_name = _config.FLEXEXTRACT_DIRNAME + '.tar'
     tar_file = os.path.join(_config.PATH_FLEXEXTRACT_DIR, tarball_name)
 
-    mk_compilejob(c.makefile, c.ecuid, c.ecgid, c.installdir)
+    mk_compilejob(c.makefile, c.ecuid, c.installdir)
 
     mk_job_template(c.ecuid, c.ecgid, c.installdir)
 
@@ -206,8 +206,7 @@ def install_via_gateway(c):
 
     mk_tarball(tar_file, c.install_target)
 
-    put_file_to_ecserver(_config.PATH_FLEXEXTRACT_DIR, tarball_name,
-                         c.install_target, c.ecuid, c.ecgid)
+    put_file_to_ecserver(_config.PATH_FLEXEXTRACT_DIR, tarball_name)
 
     submit_job_to_ecserver(c.install_target,
                            os.path.join(_config.PATH_REL_JOBSCRIPTS,
@@ -613,10 +612,10 @@ def mk_env_vars(ecuid, ecgid, gateway, destination):
 
     return
 
-def mk_compilejob(makefile, ecuid, ecgid, fp_root):
+def mk_compilejob(makefile, ecuid, fp_root):
     '''Modifies the original job template file so that it is specified
     for the user and the environment were it will be applied. Result
-    is stored in a new file "job.temp" in the python directory.
+    is stored in a new file "compilejob.ksh" in the Jobscript directory.
 
     Parameters
     ----------
@@ -626,9 +625,6 @@ def mk_compilejob(makefile, ecuid, ecgid, fp_root):
 
     ecuid : str
         The user id on ECMWF server.
-
-    ecgid : str
-        The group id on ECMWF server.
 
     fp_root : str
        Path to the root directory of FLEXPART environment or flex_extract
@@ -651,7 +647,6 @@ def mk_compilejob(makefile, ecuid, ecgid, fp_root):
                                        cls=NewTextTemplate)
 
         stream = compile_template.generate(
-            usergroup=ecgid,
             username=ecuid,
             version_number=_config._VERSION_STR,
             fp_root_scripts=fp_root,
