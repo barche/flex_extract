@@ -16,6 +16,8 @@
 #      July 2022 - Anne Tipka (formerly Philipp)
 #         - modified to account for changes on Bologna servers,
 #           e.g. queue names and hostnames
+#      August 2022 - Anne Tipka (formerly Philipp)
+#         - changed name of compilejob.ksh to compilejob.sh
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -91,7 +93,7 @@ FORTRAN_EXECUTABLE = 'calc_etadot'
 TEMPFILE_USER_ENVVARS = 'ECMWF_ENV.template'
 FILE_USER_ENVVARS = 'ECMWF_ENV'
 TEMPFILE_INSTALL_COMPILEJOB = 'installscript.template'
-FILE_INSTALL_COMPILEJOB = 'compilejob.ksh'
+FILE_INSTALL_COMPILEJOB = 'compilejob.sh'
 TEMPFILE_INSTALL_JOB = 'jobscript.template'
 TEMPFILE_JOB = 'submitscript.template'
 FILE_JOB_OD = 'job.ksh'

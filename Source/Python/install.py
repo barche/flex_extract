@@ -93,7 +93,8 @@ from Classes.ControlFile import ControlFile
 from Classes.UioFiles import UioFiles
 from Mods.tools import (make_dir, put_file_to_ecserver, submit_job_to_ecserver,
                         silent_remove, execute_subprocess, none_or_str,
-                        overwrite_lines_in_file, check_for_string_in_file)
+                        overwrite_lines_in_file, check_for_string_in_file,
+                        submit_sbatch_job)
 
 # ------------------------------------------------------------------------------
 # FUNCTIONS
@@ -113,7 +114,7 @@ def main():
     c = ControlFile(args.controlfile)
     c.assign_args_to_control(args)
     check_install_conditions(c)
-
+    
     if c.install_target.lower() not in ['local', 'syslocal']:  # ecmwf servers e.g. ecgate (ecs) and hpc
         install_via_gateway(c)
     else: # local
@@ -205,7 +206,7 @@ def install_via_gateway(c):
 
     mk_compilejob(c.makefile, c.ecuid, c.installdir)
 
-    mk_job_template(c.ecuid, c.ecgid, c.installdir)
+    mk_job_template(c.ecuid, c.installdir)
 
     mk_env_vars(c.ecuid, c.ecgid, c.gateway, c.destination)
 
@@ -213,9 +214,12 @@ def install_via_gateway(c):
 
     put_file_to_ecserver(_config.PATH_FLEXEXTRACT_DIR, tarball_name)
 
-    submit_job_to_ecserver(c.install_target,
-                           os.path.join(_config.PATH_REL_JOBSCRIPTS,
-                                        _config.FILE_INSTALL_COMPILEJOB))
+    submit_sbatch_job(os.path.join(_config.PATH_REL_JOBSCRIPTS, 
+                                   _config.FILE_INSTALL_COMPILEJOB))
+
+#    submit_job_to_ecserver(c.install_target,
+#                           os.path.join(_config.PATH_REL_JOBSCRIPTS,
+#                                        _config.FILE_INSTALL_COMPILEJOB))
 
     silent_remove(tar_file)
 
