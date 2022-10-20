@@ -214,12 +214,12 @@ def install_via_gateway(c):
 
     put_file_to_ecserver(_config.PATH_FLEXEXTRACT_DIR, tarball_name)
 
-    submit_sbatch_job(os.path.join(_config.PATH_REL_JOBSCRIPTS, 
-                                   _config.FILE_INSTALL_COMPILEJOB))
+#    submit_sbatch_job(os.path.join(_config.PATH_REL_JOBSCRIPTS, 
+#                                   _config.FILE_INSTALL_COMPILEJOB))
 
-#    submit_job_to_ecserver(c.install_target,
-#                           os.path.join(_config.PATH_REL_JOBSCRIPTS,
-#                                        _config.FILE_INSTALL_COMPILEJOB))
+    submit_job_to_ecserver(c.install_target,
+                           os.path.join(_config.PATH_REL_JOBSCRIPTS,
+                                        _config.FILE_INSTALL_COMPILEJOB))
 
     silent_remove(tar_file)
 
