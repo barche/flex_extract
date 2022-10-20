@@ -1,16 +1,15 @@
-#!/bin/ksh
+#!/bin/bash
 
 # ON ECS or HPC servers:
 # start with ecaccess-job-submit -queueName <QUEUENAME> <NAME_OF_THIS_FILE>  on gateway server
 # start with srun <NAME_OF_THIS_FILE> directly on machine
 
-#SBATCH --chdir=$$SCRATCH
+#SBATCH --chdir=/scratch/$username
 #SBATCH --qos=el
-#SBATCH --job-name=flex_extract
-#SBATCH --output=flex_extract.%j.out
-#SBATCH --error=flex_error.%j.out
+#SBATCH --job-name=flex_compile
+#SBATCH --output=flex_compile.%j.out
+#SBATCH --error=flex_compile.%j.out
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=$username
 
 ## CRAY specific batch requests
 ##PBS -N flex_ecmwf
@@ -58,10 +57,12 @@ make -f $${MAKEFILE} >flexcompile 2>flexcompile
 
 ls -l $fortran_program >>flexcompile
 if [ $$? -eq 0 ]; then
-  echo 'SUCCESS!' >>flexcompile
+  echo -e '\nSUCCESS!' >>flexcompile
   mail -s flexcompile.$${HOST}.$$$$ $${USER} <flexcompile
+  sleep 1
 else
   echo Environment: >>flexcompile
   env >> flexcompile
   mail -s "ERROR! flexcompile.$${HOST}.$$$$" $${USER} <flexcompile
+  sleep 1
 fi

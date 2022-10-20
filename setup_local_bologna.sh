@@ -56,8 +56,8 @@ parameterlist=""
 
 # CHECK IF ON ECMWF SERVER; 0
 if [[ $EC_CLUSTER == "ecs" ]] || [[ $EC_CLUSTER == "aa"* ]] || [[ $EC_CLUSTER == "ac"* ]] || [[ $EC_CLUSTER == "ad"* ]] || [[ $EC_CLUSTER == "ab"* ]]; then
-# LOAD PYTHON3 MODULE
-  module load python3
+# LOAD PYTHON3 AND ECACCESS MODULES
+  module load python3 ecaccess
 fi 
 
 # DEFAULT PARAMETERLIST
