@@ -29,6 +29,7 @@
 #    July 2022 - Anne Tipka (formerly Philipp)
 #        - modified function put_file_to_ecserver to put the file automatically
 #          to $HOME directory, to avoid static path creation
+#        - added function to submit a batch job
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -694,6 +695,14 @@ def put_file_to_ecserver(ecd, filename):
         sys.exit('... ECACCESS-FILE-PUT FAILED!')
 
     return
+
+def submit_sbatch_job(jobname):
+    '''
+    '''
+
+    job_id = subprocess.check_output(['sbatch', jobname])
+    print('SUBMITTED SBATCH JOB ',jobname)
+    return job_id.decode()
 
 def submit_job_to_ecserver(target, jobname):
     '''Uses ecaccess-job-submit command to submit a job to the ECMWF server.
