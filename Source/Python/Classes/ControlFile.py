@@ -228,6 +228,9 @@ class ControlFile(object):
         Switch to select further parameters for retrievment to support
         WRF simulations. Default value is 0.
 
+    compression : str
+        Compression type for grib messages. Standard is "grid_simple".
+
     ecfsdir : str
         Path to the ECMWF storage  'ectmp:/${USER}/econdemand/'
 
@@ -395,6 +398,7 @@ class ControlFile(object):
         self.prefix = 'EN'
         self.cwc = 0
         self.wrf = 0
+        self.compression = 'grid_simple'
         self.ecfsdir = 'ectmp:/${USER}/econdemand/'
         self.mailfail = ['${USER}']
         self.mailops = ['${USER}']

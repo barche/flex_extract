@@ -1901,6 +1901,16 @@ class EcFlexpart(object):
                                    error_msg='RENAMING FOR NEW GRIB2 FORMAT '
                                    'FILES FAILED!')
 
+            if c.compression.lower() != 'grid_simple':
+                execute_subprocess(['grib_set', '-r', '-s',
+                                    'packingType=' + c.compression,
+                                    ofile, ofile + '_2'],
+                                   error_msg='GRIB COMPRESSION FAILED!')
+
+                execute_subprocess(['mv', ofile + '_2', ofile],
+                                   error_msg='RENAMING FOR NEW GRIB COMPRESSION '
+                                             'FILES FAILED!')
+
             if c.ectrans and _config.FLAG_ON_ECMWFSERVER:
                 execute_subprocess(['ectrans', '-overwrite', '-gateway',
                                     c.gateway, '-remote', c.destination,
