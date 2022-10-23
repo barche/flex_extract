@@ -147,7 +147,10 @@ def get_mars_data(c):
     print("start date %s " % (c.start_date))
     print("end date %s " % (c.end_date))
 
-    server = mk_server(c)
+    if c.public:
+        server = mk_server(c)
+    else:
+        server = False
 
     # if data are to be retrieved, clean up any old grib files
     if c.request == 0 or c.request == 2:
