@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ON ECS or HPC servers:
-# start with ecaccess-job-submit -queueName <QUEUENAME> <NAME_OF_THIS_FILE>  on gateway server
-# start with srun <NAME_OF_THIS_FILE> directly on machine
+# start with ecaccss-job-submit -queueName <QUEUENAME> <NAME_OF_THIS_FILE>  on gateway server
+# start with sbatch <NAME_OF_THIS_FILE> directly on machine
 
 #SBATCH --chdir=/scratch/$username
 #SBATCH --qos=el
@@ -10,23 +10,16 @@
 #SBATCH --output=flex_compile.%j.out
 #SBATCH --error=flex_compile.%j.out
 #SBATCH --mail-type=FAIL
-
-## CRAY specific batch requests
-##PBS -N flex_ecmwf
-##PBS -q ns
-##PBS -S /usr/bin/ksh
-##PBS -o $$SCRATCH/flex_extract.$${Jobname}.$${Job_ID}.out
+#SBATCH --mail-user=$username
 # job output is in .ecaccess_DO_NOT_REMOVE
-##PBS -j oe
-##PBS -V
-##PBS -l EC_threads_per_task=1
-##PBS -l EC_memory_per_task=3200MB
 
 set -x
 export VERSION=$version_number
 case $${EC_CLUSTER} in
   *ecs*)
-#  module switch prgenv/gnu
+  module purge
+  module load prgenv/gnu
+  module load gcc/8.4.1
   module load ecmwf-toolbox
   module load python3
   module load ecaccess
@@ -34,7 +27,8 @@ case $${EC_CLUSTER} in
   export MAKEFILE=$makefile
   ;;
   *hpc*)
-#  module switch PrgEnv-cray PrgEnv-intel
+  module purge
+  module load prgenv/gnu gcc/8.4.1
   module load python3
   module load ecmwf-toolbox
   module load ecaccess
