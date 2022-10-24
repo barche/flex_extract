@@ -43,14 +43,19 @@ DEBUG=0
 REQUEST=2
 PUBLIC=0
 
+flex_extract_path=${HOME}/flex_extract_v7.1.3/
+
 # -----------------------------------------------------------------
 #
+
 # AFTER THIS LINE THE USER DOES NOT HAVE TO CHANGE ANYTHING !!!
 #
 # -----------------------------------------------------------------
 
+export PATH=${PATH}:${flex_extract_path}/Source/Python
+
 # PATH TO SUBMISSION SCRIPT
-pyscript=../Source/Python/submit.py
+pyscript=submit.py
 
 # INITIALIZE EMPTY PARAMETERLIST
 parameterlist=""
