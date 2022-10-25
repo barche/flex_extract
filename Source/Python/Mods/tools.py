@@ -704,7 +704,7 @@ def submit_sbatch_job(jobname):
     print('SUBMITTED SBATCH JOB ',jobname)
     return job_id.decode()
 
-def submit_job_to_ecserver(target, jobname):
+def submit_job_to_ecserver(target, jobfile):
     '''Uses ecaccess-job-submit command to submit a job to the ECMWF server.
 
     Note
@@ -718,7 +718,7 @@ def submit_job_to_ecserver(target, jobname):
     target : str
         The target where the file should be sent to, e.g. the queue.
 
-    jobname : str
+    jobfile : str
         The name of the jobfile to be submitted to the ECMWF server.
 
     Return
@@ -729,7 +729,64 @@ def submit_job_to_ecserver(target, jobname):
 
     try:
         job_id = subprocess.check_output(['ecaccess-job-submit', '-queueName',
-                                          target, jobname])
+                                          target, jobfile])
+
+    except subprocess.CalledProcessError as e:
+        print('... ERROR CODE: ' + str(e.returncode))
+        print('... ERROR MESSAGE:\n \t ' + str(e))
+
+        print('\n... Do you have a valid ecaccess certification key?')
+        sys.exit('... ecaccess-job-submit FAILED!')
+    except OSError as e:
+        print('... ERROR CODE: ' + str(e.errno))
+        print('... ERROR MESSAGE:\n \t ' + str(e.strerror))
+
+        print('\n... Most likely the ECACCESS library is not available!')
+        sys.exit('... ecaccess-job-submit FAILED!')
+
+    return job_id.decode()
+
+def submit_eventjob_to_ecserver(target, jobfile, eventid, jobname, ecuid):
+    '''Uses ecaccess-job-submit command to submit a job to the ECMWF server.
+
+    Note
+    ----
+    The return value is just for testing reasons. It does not have
+    to be used from the calling function since the whole error handling
+    is done in here.
+
+    Parameters
+    ----------
+    target : str
+        The target where the file should be sent to, e.g. the queue.
+
+    jobfile : str
+        The name of the jobfile to be submitted to the ECMWF server.
+
+    eventid : int
+        The id number from an event listed by ECMWF through ecaccess-event-list.
+
+    jobname : str
+        The name of the job, helps to distingush between jobs.
+        Will be shown in the queue and list of jobs.
+
+    ecuid : str
+        The user id on ECMWF server.
+
+    Return
+    ------
+    job_id : int
+        The id number of the job as a reference at the ECMWF server.
+    '''
+
+    try:
+        job_id = subprocess.check_output(['ecaccess-job-submit',
+                                          '-queueName', target, '-jobName', jobname,
+                                          '-onStart', '-onSuccess', '-onFailure',
+                                          '-onRetry', '-retryCount', '5',
+                                          '-mailTo', ecuid,
+                                          '-eventIds', eventid,
+                                          jobfile])
 
     except subprocess.CalledProcessError as e:
         print('... ERROR CODE: ' + str(e.returncode))

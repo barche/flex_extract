@@ -22,6 +22,9 @@
 #        - update default makefile to None
 #   August 2020 - Leopold Haimberger
 #        - added a class parameter for system installation path
+#   October 2022 - Anne Tipka (previously Philipp)
+#        - added class parameter for packingType (compression) of grib messages
+#        - added class parameter for event trigger for time critical jobs
 #
 # @License:
 #    (C) Copyright 2014-2020.
@@ -332,6 +335,13 @@ class ControlFile(object):
         Switch to select the calculation of extra ensemble members for the
         ELDA stream. It doubles the amount of retrieved ensemble members.
 
+    eventid : int
+        Id for one of the events for time critical jobs 1 at ECMWF servers.
+
+    eventjobname : str
+        The name the ecaccess-job-submit command will be given.
+        This is how the job will be recognized in the list of jobs.
+
     logicals : list of str
         List of the names of logical switches which controls the flow
         of the program. Default list is ['gauss', 'omega', 'omegadiff', 'eta',
@@ -425,6 +435,8 @@ class ControlFile(object):
         self.purefc = 0
         self.rrint = 0
         self.doubleelda = 0
+        self.eventid = None
+        self.eventjobname = ''
 
         self.logicals = ['gauss', 'omega', 'omegadiff', 'eta', 'etadiff',
                          'dpdeta', 'cwc', 'wrf', 'ecstorage',
