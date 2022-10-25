@@ -203,8 +203,8 @@ def submit(jtemplate, c, queue):
         mk_jobscript(jtemplate, job_file, clist)
 
         #job_id = submit_job_to_ecserver(queue, job_file)
-        job_id = submit_eventjob_to_ecserver(queue, c.eventjobname,
-                                             c.eventid, c.ecuid)
+        job_id = submit_eventjob_to_ecserver(queue, job_file, c.eventid ,
+                                             c.eventjobname, c.ecuid)
 
         print('The job id is: ' + str(job_id.strip()))
 
