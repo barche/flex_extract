@@ -193,8 +193,8 @@ def mk_server(c):
     '''Creates a server connection with available Python API.
 
     The API selected depends on availability and the data set to be retrieved.
-    The CDS API is used for ERA5 data, no matter whether the user is a 
-    member-state or a public user. 
+    The CDS API is used for ERA5 data, no matter whether the user is a
+    member-state or a public user.
     ECMWF WebAPI is used for all other available datasets.
 
     Parameters
@@ -297,11 +297,13 @@ def mk_dates(c, fluxes):
 
     if c.purefc and fluxes and c.maxstep < 24:
         start = start - timedelta(days=1)
-        end = end + timedelta(days=1)
+        if not c.oper:
+                end = end + timedelta(days=1)
 
     if not c.purefc and fluxes and not c.basetime == 0:
         start = start - timedelta(days=1)
-        end = end + timedelta(days=1)
+        if not c.oper:
+                end = end + timedelta(days=1)
 
     # if we have non-flux forecast data starting at 18 UTC
     # we need to start retrieving data one day in advance
