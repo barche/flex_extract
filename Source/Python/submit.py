@@ -71,7 +71,8 @@ from datetime import datetime, timedelta
 # software specific classes and modules from flex_extract
 import _config
 from Mods.tools import (setup_controldata, normal_exit,
-                        submit_job_to_ecserver)
+                        submit_job_to_ecserver,
+                        submit_eventjob_to_ecserver)
 from Mods.get_mars_data import get_mars_data
 from Mods.prepare_flexpart import prepare_flexpart
 
