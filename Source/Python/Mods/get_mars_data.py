@@ -292,18 +292,20 @@ def mk_dates(c, fluxes):
     end = datetime.strptime(c.end_date, '%Y%m%d')
     chunk = timedelta(days=int(c.date_chunk))
 
-    if c.basetime == 0:
+    if c.basetime == 0:  # non-fluxes
         start = start - timedelta(days=1)
 
     if c.purefc and fluxes and c.maxstep < 24:
         start = start - timedelta(days=1)
         if not c.oper:
-                end = end + timedelta(days=1)
+            end = end + timedelta(days=1)
 
-    if not c.purefc and fluxes and not c.basetime == 0:
+    if not c.purefc and fluxes:
         start = start - timedelta(days=1)
         if not c.oper:
-                end = end + timedelta(days=1)
+            end = end + timedelta(days=1)
+        elif c.oper and c.basetime == 0:
+            end = end - timedelta(days=1)
 
     # if we have non-flux forecast data starting at 18 UTC
     # we need to start retrieving data one day in advance
