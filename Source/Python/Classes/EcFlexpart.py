@@ -785,8 +785,6 @@ class EcFlexpart(object):
                             self._start_retrievement(request, retr_param_dict)
 
                     elif self.basetime == 0:
-#                        retr_param_dict['date'] = \
-#                            datetime.strftime(elimit - t24h, '%Y%m%d')
 
                         timesave = ''.join(retr_param_dict['time'])
 
@@ -814,6 +812,12 @@ class EcFlexpart(object):
                             retr_param_dict['target'] = \
                                 self._mk_targetname(ftype, pk,
                                                     retr_param_dict['date'])
+
+                        if ftype.upper() == 'FC' and \
+                                'acc' not in retr_param_dict['target']:
+
+                            retr_param_dict['date'] = \
+                                datetime.strftime(elimit - t24h, '%Y%m%d')
 
                         # ******* start retrievement
                         self._start_retrievement(request, retr_param_dict)

@@ -292,7 +292,7 @@ def mk_dates(c, fluxes):
     end = datetime.strptime(c.end_date, '%Y%m%d')
     chunk = timedelta(days=int(c.date_chunk))
 
-    if c.basetime == 0:  # non-fluxes
+    if c.basetime == 0 and not fluxes:  # non-fluxes
         start = start - timedelta(days=1)
 
     if c.purefc and fluxes and c.maxstep < 24:
