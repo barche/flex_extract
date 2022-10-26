@@ -1478,9 +1478,9 @@ class EcFlexpart(object):
         '''
 
         gribfile = GribUtil(os.path.join(inputdir, 'rr_grib_dummy.grb'))
-        
+
         gribfile.copy_dummy_msg(ifile, keynames=['paramId','paramId'],
-                                keyvalues=[142,143], filemode='wb')        
+                                keyvalues=[142,143], filemode='wb')
 
         return
 
@@ -1878,6 +1878,8 @@ class EcFlexpart(object):
         '''
 
         print('\n\nPostprocessing:\n Format: {}\n'.format(c.format))
+
+        print('\n\nGrib compression type:\n packingType: {}\n'.format(c.compression))
 
         if _config.FLAG_ON_ECMWFSERVER:
             print('ecstorage: {}\n ecfsdir: {}\n'.
