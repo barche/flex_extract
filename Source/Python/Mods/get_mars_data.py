@@ -159,7 +159,7 @@ def get_mars_data(c):
     # --------------  flux data ------------------------------------------------
     start, end, datechunk = mk_dates(c, fluxes=True)
     do_retrievement(c, server, start, end, datechunk, fluxes=True)
-
+    
     # --------------  non flux data --------------------------------------------
     start, end, datechunk = mk_dates(c, fluxes=False)
     do_retrievement(c, server, start, end, datechunk, fluxes=False)
@@ -292,20 +292,20 @@ def mk_dates(c, fluxes):
     end = datetime.strptime(c.end_date, '%Y%m%d')
     chunk = timedelta(days=int(c.date_chunk))
 
-    if c.basetime == 0 and not fluxes:  # non-fluxes
+    if c.basetime == 0 and not fluxes and not c.purefc:  # non-fluxes
         start = start - timedelta(days=1)
 
     if c.purefc and fluxes and c.maxstep < 24:
         start = start - timedelta(days=1)
-        if not c.oper:
-            end = end + timedelta(days=1)
+#        if not c.oper:
+#            end = end + timedelta(days=1)
 
     if not c.purefc and fluxes:
         start = start - timedelta(days=1)
         if not c.oper:
             end = end + timedelta(days=1)
-        elif c.oper and c.basetime == 0:
-            end = end - timedelta(days=1)
+#        elif c.oper and c.basetime == 0:
+#            end = end - timedelta(days=1)
 
     # if we have non-flux forecast data starting at 18 UTC
     # we need to start retrieving data one day in advance
@@ -388,7 +388,7 @@ def do_retrievement(c, server, start, end, delta_t, fluxes=False):
         print("... retrieve " + dates + " in dir " + c.inputdir)
 
         try:
-            flexpart.retrieve(server, dates, c.public, c.request, c.inputdir)
+            flexpart.retrieve(server, dates, c.public, c.purefc, c.request, c.inputdir)
         except IOError:
             my_error('MARS request failed')
 

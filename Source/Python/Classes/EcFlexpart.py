@@ -614,7 +614,7 @@ class EcFlexpart(object):
         return iid, index_vals
 
 
-    def retrieve(self, server, dates, public, request, inputdir='.'):
+    def retrieve(self, server, dates, public, purefc, request, inputdir='.'):
         '''Finalizing the retrieval information by setting final details
         depending on grid type.
         Prepares MARS retrievals per grid type and submits them.
@@ -632,6 +632,14 @@ class EcFlexpart(object):
         dates : str
             Contains start and end date of the retrieval in the format
             "YYYYMMDD/to/YYYYMMDD"
+
+        public : int
+            Switch to select kind of ECMWF Web API access and the possible data sets.
+            Public data sets (1) and Member states data sets (0).
+
+        purefc : int
+            Switch to decide whether the job is a pure forecast retrieval or
+            coupled with analysis data.
 
         request : int
             Selects the mode of retrieval.
@@ -651,6 +659,7 @@ class EcFlexpart(object):
         self.server = server
         self.public = public
         self.inputdir = inputdir
+        self.purefc = purefc
         oro = False
 
         # define times with datetime module
@@ -738,7 +747,7 @@ class EcFlexpart(object):
 
                         print('CHANGED FC start date to ' +
                               sdate.strftime("%Y%m%d") +
-                              ' to accomodate TIME=' +
+                              ' to accommodate TIME=' +
                               retr_param_dict['time'][0] +
                               ', STEP=' +
                               retr_param_dict['time'][0])
@@ -752,26 +761,25 @@ class EcFlexpart(object):
                     # check if mars job requests fields beyond basetime.
                     # if yes eliminate those fields since they may not
                     # be accessible with user's credentials
-
+                    dates = retr_param_dict['date'].split('/')
                     enddate = retr_param_dict['date'].split('/')[-1]
-                    elimit = datetime.strptime(enddate + str(self.basetime),
-                                               '%Y%m%d%H')
+                    elimit = datetime.strptime(enddate, '%Y%m%d')
 
                     if self.basetime == 12:
                         # --------------  flux data ----------------------------
-                        if 'acc' in pk:
-                            startdate = retr_param_dict['date'].split('/')[0]
-                            enddate = datetime.strftime(elimit - t24h, '%Y%m%d')
-                            retr_param_dict['date'] = '/'.join([startdate,
-                                                                'to',
-                                                                enddate])
+                        if 'acc' in pk and not self.purefc:
+
+                            retr_param_dict['date'] = dates[0]
+                            retr_param_dict['time'] = '12'
+                            retr_param_dict['target'] = \
+                                self._mk_targetname(ftype, pk,
+                                                    retr_param_dict['date'])
 
                             # ******* start retrievement
                             self._start_retrievement(request, retr_param_dict)
 
-                            retr_param_dict['date'] = \
-                                datetime.strftime(elimit - t12h, '%Y%m%d')
-                            retr_param_dict['time'] = '00'
+                            retr_param_dict['date'] = dates[-1]
+                            retr_param_dict['time'] = '00/12'
                             retr_param_dict['target'] = \
                                 self._mk_targetname(ftype, pk,
                                                     retr_param_dict['date'])
@@ -785,42 +793,64 @@ class EcFlexpart(object):
                             self._start_retrievement(request, retr_param_dict)
 
                     elif self.basetime == 0:
+                        # --------------  flux data ----------------------------
+                        if 'acc' in pk and not self.purefc:
 
-                        timesave = ''.join(retr_param_dict['time'])
-
-                        if all(['/' in retr_param_dict['time'],
-                                pk != 'OG_OROLSM__SL',
-                                'acc' not in pk]):
-                            times = retr_param_dict['time'].split('/')
-                            steps = retr_param_dict['step'].split('/')
-
-                            while int(times[0]) + int(steps[0]) <= 12:
-                                times = times[1:]
-                                if len(times) > 1:
-                                    retr_param_dict['time'] = '/'.join(times)
-                                else:
-                                    retr_param_dict['time'] = times[0]
-
-                        if all([pk != 'OG_OROLSM__SL',
-                                int(retr_param_dict['step'].split('/')[0]) == 0,
-                                int(timesave.split('/')[0]) == 0]):
-
-                            retr_param_dict['date'] = \
-                                datetime.strftime(elimit, '%Y%m%d')
-                            retr_param_dict['time'] = '00'
-                            retr_param_dict['step'] = '000'
+                            retr_param_dict['date'] = dates[0]
+                            retr_param_dict['time'] = '00/12'
                             retr_param_dict['target'] = \
                                 self._mk_targetname(ftype, pk,
                                                     retr_param_dict['date'])
 
-                        if ftype.upper() == 'FC' and \
-                                'acc' not in retr_param_dict['target']:
+                            # ******* start retrievement
+                            self._start_retrievement(request, retr_param_dict)
 
-                            retr_param_dict['date'] = \
-                                datetime.strftime(elimit - t24h, '%Y%m%d')
+                            retr_param_dict['date'] = dates[-1]
+                            retr_param_dict['time'] = '00'
+                            retr_param_dict['target'] = \
+                                self._mk_targetname(ftype, pk,
+                                                    retr_param_dict['date'])
 
-                        # ******* start retrievement
-                        self._start_retrievement(request, retr_param_dict)
+                            # ******* start retrievement
+                            self._start_retrievement(request, retr_param_dict)
+                        elif 'acc' in pk and self.purefc:
+                            # ******* start retrievement
+                            self._start_retrievement(request, retr_param_dict)
+                        # --------------  non flux data ------------------------
+                        else: # 'acc' not in pk
+                            timesave = ''.join(retr_param_dict['time'])
+
+                            if all(['/' in retr_param_dict['time'],
+                                    pk != 'OG_OROLSM__SL']):
+                                times = retr_param_dict['time'].split('/')
+                                steps = retr_param_dict['step'].split('/')
+
+                                while int(times[0]) + int(steps[0]) <= 12:
+                                    times = times[1:]
+                                    if len(times) > 1:
+                                        retr_param_dict['time'] = '/'.join(times)
+                                    else:
+                                        retr_param_dict['time'] = times[0]
+
+                            if all([pk != 'OG_OROLSM__SL',
+                                    int(retr_param_dict['step'].split('/')[0]) == 0,
+                                    int(timesave.split('/')[0]) == 0]):
+
+                                retr_param_dict['date'] = \
+                                    datetime.strftime(elimit, '%Y%m%d')
+                                retr_param_dict['time'] = '00'
+                                retr_param_dict['step'] = '000'
+                                retr_param_dict['target'] = \
+                                    self._mk_targetname(ftype, pk,
+                                                        retr_param_dict['date'])
+
+                            if ftype.upper() == 'FC' and not self.purefc:
+
+                                retr_param_dict['date'] = \
+                                    datetime.strftime(elimit - t24h, '%Y%m%d')
+
+                            # ******* start retrievement
+                            self._start_retrievement(request, retr_param_dict)
                     else:
                         raise ValueError('ERROR: Basetime has an invalid value '
                                          '-> {}'.format(str(self.basetime)))

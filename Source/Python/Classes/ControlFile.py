@@ -623,8 +623,6 @@ class ControlFile(object):
         self.start_date, self.end_date = check_dates(self.start_date,
                                                      self.end_date)
 
-        self.basetime = check_basetime(self.basetime)
-
         self.levelist, self.level = check_levels(self.levelist, self.level)
 
         self.step = check_step(self.step)
@@ -638,9 +636,11 @@ class ControlFile(object):
 
         self.type = check_type(self.type, self.step)
 
-        self.time = check_time(self.time)
-
         self.purefc = check_purefc(self.type)
+
+        self.basetime, self.time = check_basetime(self.basetime, self.time, self.purefc)
+
+        self.time = check_time(self.time)
 
         self.type, self.time, self.step = check_len_type_time_step(self.type,
                                                                    self.time,
@@ -651,7 +651,8 @@ class ControlFile(object):
         self.acctype = check_acctype(self.acctype, self.type)
 
         self.acctime = check_acctime(self.acctime, self.marsclass,
-                                     self.purefc, self.time)
+                                     self.purefc, self.time,
+                                     self.basetime, self.oper)
 
         self.accmaxstep = check_accmaxstep(self.accmaxstep, self.marsclass,
                                            self.purefc, self.maxstep)

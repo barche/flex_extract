@@ -92,7 +92,7 @@ def check_grid(grid):
             grid = gridx
         else:
             raise ValueError('GRID parameter contains two '
-                             'different values: %s' (grid))
+                             'different values: %s', grid)
     # # determine grid format
     # if float(grid) / 100. >= 0.5:
     #    # grid is defined in 1/1000 degrees; old format
@@ -235,7 +235,6 @@ def check_levels(levelist, level):
 
     return levelist, level
 
-
 def check_ppid(c, ppid):
     '''Sets the current PPID.
 
@@ -261,7 +260,6 @@ def check_ppid(c, ppid):
 
     return
 
-
 def check_purefc(ftype):
     '''Check for a pure forecast mode.
 
@@ -282,7 +280,6 @@ def check_purefc(ftype):
         return 1
 
     return 0
-
 
 def check_step(step):
     '''Checks on step format and convert into a list of steps.
@@ -403,14 +400,9 @@ def check_len_type_time_step(ftype, ftime, steps, maxstep, purefc):
         Specifies the forecast time step from forecast base time.
         Valid values are hours (HH) from forecast base time.
     '''
-    if not len(ftype) == len(ftime) == len(steps):
-        raise ValueError('ERROR: The number of field types, times and steps '
-                         'are not the same! Please check the settings in the '
-                         'CONTROL file!')
-
     # if pure forecast is selected and only one field type/time is set
     # prepare a complete list of type/time/step combination upto maxstep
-    if len(ftype) == 1 and purefc:
+    if len(ftime) == 1 and purefc:
         nftype = []
         nsteps = []
         nftime = []
@@ -420,6 +412,10 @@ def check_len_type_time_step(ftype, ftime, steps, maxstep, purefc):
             nftime.append(ftime[0])
         return nftype, nftime, nsteps
 
+    if not len(ftype) == len(ftime) == len(steps):
+        raise ValueError('ERROR: The number of field types, times and steps '
+                         'are not the same! Please check the settings in the '
+                         'CONTROL file!')
     return ftype, ftime, steps
 
 def check_mail(mail):
@@ -604,7 +600,7 @@ def check_maxstep(maxstep, steps):
 
     return maxstep
 
-def check_basetime(basetime):
+def check_basetime(basetime, time, purefc):
     '''Check if basetime is set and contains one of the two
     possible values (0, 12).
 
@@ -614,18 +610,30 @@ def check_basetime(basetime):
         The time for a half day retrieval. The 12 hours upfront are to be
         retrieved.
 
+    time : str
+        The time in hours of the field.
+
+    purefc : int
+        1 if pure forecasts are to be retrieved. 0 if there are
+        analysis fields in between.
+
     Return
     ------
     basetime : int or None
         The time for a half day retrieval. The 12 hours upfront are to be
         retrieved.
+
+    time : str or list of str
+        The time in hours of the field.
     '''
     if basetime is not None:
         basetime = int(basetime)
         if basetime != 0 and basetime != 12:
             raise ValueError('ERROR: Basetime has an invalid value '
                              '-> {}'.format(str(basetime)))
-    return basetime
+        if purefc:
+            time = str(basetime)
+    return basetime, time
 
 def check_request(request, marsfile):
     '''Check if there is an old MARS request file; if so, remove it.
@@ -706,8 +714,7 @@ def check_acctype(acctype, ftype):
                              'of type "analysis"!')
     return acctype
 
-
-def check_acctime(acctime, marsclass, purefc, time):
+def check_acctime(acctime, marsclass, purefc, time, basetime, oper):
     '''Guarantees that the accumulation forecast times were set.
 
     If not set, setting the value to some of the most commonly used data sets
@@ -724,11 +731,22 @@ def check_acctime(acctime, marsclass, purefc, time):
     purefc : int
         Switch for definition of pure forecast mode or not.
 
+    basetime : int
+        The time for a half day retrieval. The 12 hours upfront are to be
+        retrieved.
+
+    oper : int
+        Switch to prepare the operational job script. Start date, end date and
+        basetime will be prepared with environment variables.
+
     Return
     ------
     acctime : str
         The starting time for the accumulated forecasts.
     '''
+
+    if acctime and basetime and oper:
+        return basetime
 
     if not acctime:
         print('... Control parameter ACCTIME was not set.')
@@ -816,14 +834,13 @@ def check_addpar(addpar):
     if addpar and isinstance(addpar, str):
         if '/' in addpar:
             parlist = addpar.split('/')
-            parlist = [p for p in parlist if p is not '']
+            parlist = [p for p in parlist if p != '']
         else:
             parlist = [addpar]
 
         addpar = '/' + '/'.join(parlist)
 
     return addpar
-
 
 def check_job_chunk(job_chunk):
     '''Checks that if job chunk is set, the number is positive and nonzero.
@@ -852,7 +869,6 @@ def check_job_chunk(job_chunk):
         pass
 
     return job_chunk
-
 
 def check_number(number):
     '''Check for correct string format of ensemble member numbers.
