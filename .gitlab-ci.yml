@@ -10,4 +10,5 @@ static-copy:
     image: harbor.wolke.img.univie.ac.at/podman/alpine-sshpass:latest
     when: manual
     script:
+        - ls ./Documentation/html/
         - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
