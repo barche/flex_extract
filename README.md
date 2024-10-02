@@ -2,7 +2,7 @@
 
 `flex_extract` is a software package to support retrieving meteorological fields from the European Centre for Medium-Range Weather Forecasts' (ECMWF) Meteorological Archival and Retrieval System (MARS) as input for the `FLEXTRA`/`FLEXPART` Atmospheric Transport Modelling system.
 
-`FLEXPART` (“FLEXible PARTicle dispersion model”, http://flexpart.eu) is a Lagrangian transport and dispersion model suitable for the simulation of a large range of atmospheric transport processes.
+`FLEXPART` (“FLEXible PARTicle dispersion model”, [flexpart.eu](http://flexpart.eu)) is a Lagrangian transport and dispersion model suitable for the simulation of a large range of atmospheric transport processes.
 
 
 ## Installation and Usage
@@ -12,7 +12,7 @@ Please open the file Documentation/html/index.html in your preferred browser to 
 
 ## Project website
 
-https://www.flexpart.eu/wiki/FpInputMetEcmwf
+[flexpart.img.univie.ac.at/flexextract](https://www.flexpart.img.univie.ac.at/flexextract)
 
 ## Authors
 

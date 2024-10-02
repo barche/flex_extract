@@ -17,7 +17,6 @@ import sys, glob
 sys.path.insert(0, os.path.abspath('../../../Source/Python'))
 sys.path.insert(0, os.path.abspath('../../../Source/Python/Mods'))
 sys.path.insert(0, os.path.abspath('../../../Source/Python/Classes'))
-
 sys.path.insert(0, os.path.abspath('_static/python'))
 sys.setrecursionlimit(1500)
 

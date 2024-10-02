@@ -6,7 +6,7 @@ SPHINXOPTS    = -d Build_temp
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = flex_extract
 SOURCEDIR     = Source
-BUILDDIR      = ../../Documentation
+BUILDDIR      = Documentation
 
 # Put it first so that "make" without argument is like "make help".
 help:

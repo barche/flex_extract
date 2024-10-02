@@ -1,0 +1,17 @@
+# using Python 3.7 latest
+# not sure about the version, but sphinx must be version 1.?
+# documentation tool
+sphinx==1.8.5
+sphinx_rtd_theme
+sphinxcontrib-seqdiag
+sphinxcontrib-exceltable
+sphinx-jsonschema
+sphinxcontrib-blockdiag
+seqdiag>=0.9.3,<2
+graphviz
+mock
+pytest
+pylint
+pycallgraph
+Jinja2<3.1
+blockdiag>=1.5.4,<2
