@@ -17,21 +17,19 @@ static-copy:
 build:
     image: harbor.wolke.img.univie.ac.at/podman/flexextract_sphinx:latest
     stage: dynamic
-    when: manual
     script:
         # --strict is too strict :)
-        - cd For_Developers/Sphinx
+        - cd For_developers/Sphinx
         - make html
     artifacts:
         paths:
-            - For_Developers/Sphinx/Documentation/html/*
+            - For_developers/Sphinx/Documentation/html/*
         expire_in: 60 seconds
 
 deploy:
   stage: dynamic
   image: harbor.wolke.img.univie.ac.at/podman/alpine-sshpass:latest
-  when: manual
   needs:
     - build
   script:
-        - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./For_Developers/Sphinx/Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
+        - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./For_developers/Sphinx/Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
