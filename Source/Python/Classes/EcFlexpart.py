@@ -1572,9 +1572,10 @@ class EcFlexpart(object):
         # which are used to seperate the grib fields to,
         # for the Fortran program input
         # 10: U,V | 11: T | 12: lnsp | 13: D | 16: sfc fields
-        # 17: Q | 18: Q, SL, GG| 19: omega | 21: etadot | 22: clwc+ciwc
+        # 17: Q | 18: Q, SL, GG| 19: omega | 21: etadot | 22: clwc | 23: ciwc
         fdict = {'10':None, '11':None, '12':None, '13':None, '16':None,
-                 '17':None, '18':None, '19':None, '21':None, '22':None}
+                 '17':None, '18':None, '19':None, '21':None, '22':None,
+                 '23':None}
 
         iid = None
         index_vals = None
@@ -1679,16 +1680,10 @@ class EcFlexpart(object):
                     codes_write(gid, fdict['12'])
                 elif paramId == 155 and gridtype == 'sh': # D
                     codes_write(gid, fdict['13'])
-                elif paramId == 246 or paramId == 247: # CLWC, CIWC
-                    # sum cloud liquid water and ice
-                    if scwc is None:
-                        scwc = codes_get_values(gid)
-                    else:
-                        scwc += codes_get_values(gid)
-                        codes_set_values(gid, scwc)
-                        codes_set(gid, 'paramId', 201031)
-                        codes_write(gid, fdict['22'])
-                        scwc = None
+                elif paramId == 246: # CLWC
+                    codes_write(gid, fdict['22'])
+                elif paramId == 247: # CIWC
+                    codes_write(gid, fdict['23'])
                 # @WRF
                 # THIS IS NOT YET CORRECTLY IMPLEMENTED !!!
                 #
@@ -1792,7 +1787,7 @@ class EcFlexpart(object):
             if not c.cwc:
                 flist = ['fort.15', fluxfile, 'fort.16', orolsm]
             else:
-                flist = ['fort.15', 'fort.22', fluxfile, 'fort.16', orolsm]
+                flist = ['fort.15', 'fort.22', 'fort.23', fluxfile, 'fort.16', orolsm]
 
             with open(fnout, 'wb') as fout:
                 for f in flist:
