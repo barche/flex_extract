@@ -1,35 +1,28 @@
 stages:
-    - static
-    - dynamic
+  - dynamic
 
 default:
   tags:
     - podman
 
-static-copy:
-    stage: static
-    image: harbor.wolke.img.univie.ac.at/podman/alpine-sshpass:latest
-    when: manual
-    script:
-        - ls ./Documentation/html/
-        - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
-
 build:
-    image: harbor.wolke.img.univie.ac.at/podman/flexextract_sphinx:latest
-    stage: dynamic
-    script:
-        # --strict is too strict :)
-        - cd For_developers/Sphinx
-        - make html
-    artifacts:
-        paths:
-            - For_developers/Sphinx/Documentation/html/*
-        expire_in: 60 seconds
+  image: harbor.wolke.img.univie.ac.at/podman/flexextract_sphinx:latest
+  stage: dynamic
+  script:
+    # --strict is too strict :)
+    - cd For_developers/Sphinx
+    - make html
+  artifacts:
+    paths:
+      - For_developers/Sphinx/Documentation/html/*
+    expire_in: 60 seconds
 
 deploy:
   stage: dynamic
   image: harbor.wolke.img.univie.ac.at/podman/alpine-sshpass:latest
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   needs:
     - build
   script:
-        - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./For_developers/Sphinx/Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
+    - sshpass -p "$WOLKE_PASSWORD" rsync -autv --delete -e "ssh -o StrictHostKeyChecking=no" ./For_developers/Sphinx/Documentation/html/* "$WOLKE_USER@wolke.img.univie.ac.at:/var/www/flexpart/flexextract"
