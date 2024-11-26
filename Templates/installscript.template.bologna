@@ -19,7 +19,6 @@ case $${EC_CLUSTER} in
   *ecs*)
   module purge
   module load prgenv/gnu
-  module load gcc/8.4.1
   module load ecmwf-toolbox
   module load python3
   module load ecaccess
@@ -28,7 +27,7 @@ case $${EC_CLUSTER} in
   ;;
   *hpc*)
   module purge
-  module load prgenv/gnu gcc/8.4.1
+  module load prgenv/gnu
   module load python3
   module load ecmwf-toolbox
   module load ecaccess
