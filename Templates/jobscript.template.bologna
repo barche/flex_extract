@@ -19,17 +19,19 @@ export VERSION=$version_number
 case $$$${EC_CLUSTER} in
   *ecs*)
   module purge
-  module load prgenv/gnu gcc/8.4.1
+  module load prgenv/gnu gcc/8.5.0
   module load python3
-  module load ecmwf-toolbox
+  # need eccodes 2.35.0, because of changes in the tables
+  module load ecmwf-toolbox/2024.04.0.0
   module load ecaccess
   export PATH=$$$${PATH}:$fp_root_path
   ;;
   *hpc*)
   module purge
-  module load prgenv/gnu gcc/8.4.1
+  module load prgenv/gnu gcc/8.5.0
   module load python3
-  module load ecmwf-toolbox
+  # need eccodes 2.35.0, because of changes in the tables
+  module load ecmwf-toolbox/2024.04.0.0
   module load ecaccess
   export SCRATCH=$$$${TMPDIR}
   export PATH=$$$${PATH}:$fp_root_path
