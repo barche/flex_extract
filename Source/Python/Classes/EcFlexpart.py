@@ -1928,14 +1928,15 @@ class EcFlexpart(object):
             ofile = os.path.join(self.inputdir, ofile)
 
             if c.format.lower() == 'grib2':
-                execute_subprocess(['grib_set', '-s', 'edition=2,' +
-                                    'productDefinitionTemplateNumber=8',
-                                    ofile, ofile + '_2'],
-                                   error_msg='GRIB2 CONVERSION FAILED!')
+                # execute_subprocess(['grib_set', '-s', 'edition=2,' +
+                #                     'productDefinitionTemplateNumber=8',
+                #                     ofile, ofile + '_2'],
+                #                    error_msg='GRIB2 CONVERSION FAILED!')
 
-                execute_subprocess(['mv', ofile + '_2', ofile],
-                                   error_msg='RENAMING FOR NEW GRIB2 FORMAT '
-                                   'FILES FAILED!')
+                # execute_subprocess(['mv', ofile + '_2', ofile],
+                #                    error_msg='RENAMING FOR NEW GRIB2 FORMAT '
+                #                    'FILES FAILED!')
+                print('GRIB2 CONVERSION skipped!')
 
             if c.compression.lower() != 'grid_simple':
                 execute_subprocess(['grib_set', '-r', '-s',
