@@ -12,7 +12,7 @@ Please open the file Documentation/html/index.html in your preferred browser to 
 
 ## Project website
 
-[flexpart.img.univie.ac.at/flexextract](https://www.flexpart.img.univie.ac.at/flexextract)
+[flexpart.img.univie.ac.at/flexextract](https://flexpart.img.univie.ac.at/flexextract)
 
 ## Authors
 
