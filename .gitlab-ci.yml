@@ -1,10 +1,6 @@
 stages:
   - dynamic
 
-default:
-  tags:
-    - podman
-
 build:
   image: harbor.wolke.img.univie.ac.at/podman/flexextract_sphinx:latest
   stage: dynamic
