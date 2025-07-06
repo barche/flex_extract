@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/morton/git/flex_extract/Run/../Source/Python/submit.py", line 272, in <module>
+    main()
+  File "/home/morton/git/flex_extract/Run/../Source/Python/submit.py", line 98, in main
+    c, ppid, queue, job_template = setup_controldata()
+                                   ^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/git/flex_extract/Source/Python/Mods/tools.py", line 124, in setup_controldata
+    c.check_conditions(args.queue)
+  File "/home/morton/git/flex_extract/Source/Python/Classes/ControlFile.py", line 645, in check_conditions
+    self.type, self.time, self.step = check_len_type_time_step(self.type,
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/git/flex_extract/Source/Python/Mods/checks.py", line 416, in check_len_type_time_step
+    raise ValueError('ERROR: The number of field types, times and steps '
+ValueError: ERROR: The number of field types, times and steps are not the same! Please check the settings in the CONTROL file!

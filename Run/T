@@ -1,0 +1,6 @@
+SERVER = ECMWF
+DEBUG = 1
+ECUID $user_name
+ECGID $user_group
+GATEWAY $gateway_name
+DESTINATION $destination_name

@@ -29,12 +29,12 @@
 #
 # THE USER HAS TO SPECIFY THESE PARAMETERS
 #
-TARGET='ecs'
-MAKEFILE='makefile_atosecs'
-ECUID='<username>'
-ECGID='<groupID>'
-GATEWAY='<gatewayname>'
-DESTINATION='<username>@genericSftp'
+TARGET='local'
+MAKEFILE='makefile_local_gfortran'
+ECUID=None
+ECGID=None
+GATEWAY=None
+DESTINATION=None
 INSTALLDIR=None
 JOB_TEMPLATE=''
 CONTROLFILE='CONTROL_EA5'

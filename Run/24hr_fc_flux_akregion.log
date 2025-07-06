@@ -1,0 +1,120 @@
+2025-06-09 01:05:18,851 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2025-06-09 01:05:19,745 INFO Request ID is 2458afe1-1b6a-48aa-9eb8-633044f0bd2f
+2025-06-09 01:05:19,957 INFO status has been updated to accepted
+2025-06-09 01:05:53,504 INFO status has been updated to successful
+Retrieving ECMWF data!
+start date 20240514 
+end date 20240514 
+Using ECMWF WebAPI: False
+Using CDS API: True
+... removing old files in /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion
+... retrieve 20240514/to/20240514 in dir /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion
+marsclass: EA
+dataset: None
+type: FC
+levtype: SFC
+levelist: 1
+repres: 
+date: 20240514/to/20240514
+resol: 799
+stream: OPER
+area: 74.0/-170.0/58.0/-140.0
+time: 00
+step: 0/to/24/by/3
+expver: 1
+number: OFF
+accuracy: 24
+grid: 1.0/1.0
+gaussian: 
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/FCOG_acc_SL.20240514.3530.3532.grb
+param: 142.128/143.128/146.128/180.128/181.128/176.128
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/FCOG_acc_SL.20240514.3530.3532.grb
+RETRIEVE ERA5 WITH CDS API!
+725d4ee5ad2ef74ac04fd83463aa2311.grib:   0%|          | 0.00/54.5k [00:00<?, ?B/s]725d4ee5ad2ef74ac04fd83463aa2311.grib: 100%|██████████| 54.5k/54.5k [00:00<00:00, 63.3kB/s]                                                                                           2025-06-09 01:05:56,405 INFO Request ID is 8cfb4962-ee19-48b7-859c-ca572d99cc04
+2025-06-09 01:05:56,604 INFO status has been updated to accepted
+2025-06-09 01:06:10,882 INFO status has been updated to running
+2025-06-09 01:06:18,653 INFO status has been updated to successful
+MARS retrieve done ... 
+... retrieve 20240514/to/20240514 in dir /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion
+marsclass: EA
+dataset: None
+type: AN
+levtype: SFC
+levelist: 1
+repres: 
+date: 20240514
+resol: 799
+stream: OPER
+area: 74.0/-170.0/58.0/-140.0
+time: 00
+step: 000
+expver: 1
+number: OFF
+accuracy: 24
+grid: 1.0/1.0
+gaussian: 
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/OG_OROLSM__SL.20240514.3530.3532.grb
+param: 160.128/027.128/028.128/244.128
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/OG_OROLSM__SL.20240514.3530.3532.grb
+RETRIEVE ERA5 WITH CDS API!
+a725a1a92780f159b77f92d115f2948b.grib:   0%|          | 0.00/6.59k [00:00<?, ?B/s]a725a1a92780f159b77f92d115f2948b.grib: 100%|██████████| 6.59k/6.59k [00:00<00:00, 13.3kB/s]                                                                                           2025-06-09 01:06:20,818 INFO Request ID is 52bb92b0-5500-4f49-8f27-17c782a3f266
+2025-06-09 01:06:21,058 INFO status has been updated to accepted
+2025-06-09 01:07:11,871 INFO status has been updated to failed
+marsclass: EA
+dataset: None
+type: AN/FC
+levtype: ML
+levelist: 1/to/137
+repres: 
+date: 20240514/to/20240514
+resol: 799
+stream: OPER
+area: 74.0/-170.0/58.0/-140.0
+time: 00
+step: 000/003/006/009/012/015/018/021/024
+expver: 1
+number: OFF
+accuracy: 24
+grid: 1.0/1.0
+gaussian: 
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/AN/FCOG__ML.20240514.3530.3532.grb
+param: 130.128/133.128/131.128/132.128/246.128/247.128
+target: /home/morton/git/flex_extract/Run/Workspace/EA5.24hr_fc_flux_akregion/AN/FCOG__ML.20240514.3530.3532.grb
+RETRIEVE ERA5 WITH CDS API!
+
+
+MARS Request failed!
+400 Client Error: Bad Request for url: https://cds.climate.copernicus.eu/api/retrieve/v1/jobs/52bb92b0-5500-4f49-8f27-17c782a3f266/results
+The job has failed.
+The job failed with: FileNotFoundError
+Traceback (most recent call last):
+  File "/home/morton/git/flex_extract/Source/Python/Classes/MarsRetrieval.py", line 592, in data_retrieve
+    self.server.retrieve(dataset,
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/legacy_api_client.py", line 169, in retrieve
+    submitted = self.client.submit_and_wait_on_results(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/api_client.py", line 399, in submit_and_wait_on_results
+    return self._retrieve_api.submit(collection_id, request).get_results()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 545, in get_results
+    return self._make_results(wait=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 520, in _make_results
+    self._wait_on_results()
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 498, in _wait_on_results
+    while not self.results_ready:
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 512, in results_ready
+    results = self._make_results(wait=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 526, in _make_results
+    results = Results.from_request("get", results_url, **self._request_kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 177, in from_request
+    cads_raise_for_status(response)
+  File "/home/morton/venvs/flexpart/lib/python3.12/site-packages/datapi/processing.py", line 100, in cads_raise_for_status
+    raise requests.HTTPError(message, response=response)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://cds.climate.copernicus.eu/api/retrieve/v1/jobs/52bb92b0-5500-4f49-8f27-17c782a3f266/results
+The job has failed.
+The job failed with: FileNotFoundError
+
