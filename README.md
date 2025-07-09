@@ -23,7 +23,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 #### I Have a question
 > If you want to ask a question, we assume that you have read the available [Documentation](https://flexpart.img.univie.ac.at/flexextract).
 
-Before you ask a question, it is best to search for existing [Issues](/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+Before you ask a question, it is best to search for existing [Issues](https://gitlab.phaidra.org/flexpart/flex_extract/-/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
 
 If you then still feel the need to ask a question and need clarification, we recommend the following:
 
