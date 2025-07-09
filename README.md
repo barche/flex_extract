@@ -14,6 +14,25 @@ Please open the file Documentation/html/index.html in your preferred browser to 
 
 [flexpart.img.univie.ac.at/flexextract](https://flexpart.img.univie.ac.at/flexextract)
 
+## Contributing
+
+First off, thanks for taking the time to contribute! ❤️
+This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behavior to any of the [Owners](https://gitlab.phaidra.org/flexpart/flex_extract/-/project_members?max_role=static-50&sort=name_asc).
+
+#### I Have a question
+> If you want to ask a question, we assume that you have read the available [Documentation](https://flexpart.img.univie.ac.at/flexextract).
+
+Before you ask a question, it is best to search for existing [Issues](/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+
+If you then still feel the need to ask a question and need clarification, we recommend the following:
+
+- Open an [Issue (External to Gitlab)](mailto:gitlab.phaidra+flexpart-flex-extract-455-83oajbsk56s0ri23fexs3onrl-issue@univie.ac.at).
+- Provide as much context as you can about what you're running into.
+- Provide project and platform versions (eccodes, compiler, etc), depending on what seems relevant.
+
+We will then take care of the issue as soon as possible.
+
 ## Authors
 
 Anne Philipp, Leopold Haimberger and Petra Seibert
