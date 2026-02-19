@@ -206,7 +206,9 @@ def mk_server(c):
         Connection to ECMWF server via python interface ECMWF WebAPI or CDS API.
 
     '''
-    if cds_api and (c.marsclass.upper() == 'EA'):
+    if "IP_INTERNAL" in os.environ: # This is for ECMWF weather cloud servers, to force the use of the mars command
+        server = False
+    elif cds_api and (c.marsclass.upper() == 'EA'):
         server = cdsapi.Client()
         c.ec_api = False
     elif c.ec_api:

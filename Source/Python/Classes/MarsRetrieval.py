@@ -598,15 +598,21 @@ class MarsRetrieval(object):
             for key, value in attrs.items():
                 request_str = request_str + ',' + key + '=' + str(value)
             request_str += ',target="' + target + '"'
-            p = subprocess.Popen(['mars'], #'-e'],
-                                 stdin=subprocess.PIPE,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE,
-                                 bufsize=1)
-            pout = p.communicate(input=request_str.encode())[0]
-            print(pout.decode())
 
-            if 'Some errors reported' in pout.decode():
+            # Avoid crashes in mars from a bad environment
+            newenv = None
+            if "LD_LIBRARY_PATH" in os.environ:
+                newenv = {
+                    "PATH": os.environ["PATH"],
+                    "HOME": os.environ["HOME"],
+                }
+            p = subprocess.run(['mars'], capture_output=True, input=request_str.encode(), env=newenv)
+            
+            print(p.stdout.decode())
+            print(p.stderr.decode())
+            print('mars returncode:', p.returncode)
+
+            if 'Some errors reported' in p.stdout.decode():
                 print('MARS Request failed - please check request')
                 raise IOError
             elif os.stat(target).st_size == 0:
