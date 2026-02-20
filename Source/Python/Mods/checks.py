@@ -879,7 +879,7 @@ def check_number(number):
                      '{:0>3}'.format(int(numbers[2]))
         else:
             numbers = ['{:0>3}'.format(i) for i in numbers]
-            number = '{:0>3}/'.join(numbers)
+            number = '/'.join(numbers)
     elif number.isdigit():
         number = '{:0>3}'.format(int(number))
     else:
